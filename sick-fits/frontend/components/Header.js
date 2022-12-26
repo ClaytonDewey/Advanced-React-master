@@ -39,11 +39,11 @@ const Header = () => (
       <Logo>
         <Link href="/">Sick fits</Link>
       </Logo>
-      <Nav />
     </div>
     <div className="sub-bar">
       <p>search</p>
     </div>
+    <Nav />
   </HeaderStyles>
 );
 
