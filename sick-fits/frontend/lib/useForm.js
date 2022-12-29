@@ -10,7 +10,7 @@ const useForm = (initial = {}) => {
       value = parseInt(value);
     }
     if (type === 'file') {
-      value[0] = e.target.files;
+      [value] = e.target.files;
     }
     setInputs({
       // copy the existing state
