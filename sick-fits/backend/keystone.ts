@@ -1,5 +1,5 @@
-import { config, createSchema } from '@keystone-next/keystone/schema';
 import { createAuth } from '@keystone-next/auth';
+import { config, createSchema } from '@keystone-next/keystone/schema';
 import {
   withItemData,
   statelessSessions,
@@ -27,7 +27,6 @@ const { withAuth } = createAuth({
 
 export default withAuth(
   config({
-    // @ts-ignore
     server: {
       cors: {
         origin: [process.env.FRONTEND_URL],
@@ -40,18 +39,17 @@ export default withAuth(
       // TODO: Add data seeding here
     },
     lists: createSchema({
-      // Schema items go in here
       User,
     }),
     ui: {
-      // Show the UI only for poeple who pass this test
-      isAccessAllowed: ({ session }) =>
-        // console.log(session);
-        !!session?.data,
+      // Show the UI only for people who pass this test
+      isAccessAllowed: ({ session }) => {
+        console.log(session);
+        return !!session?.data;
+      },
     },
     session: withItemData(statelessSessions(sessionConfig), {
-      // GraphQL Query
-      User: 'id name email',
+      User: 'id',
     }),
   })
 );
