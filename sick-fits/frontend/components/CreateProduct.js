@@ -8,7 +8,7 @@ import Form from './styles/Form';
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
-    # which variables are getting passed in? And what types are they
+    # Which variables are getting passed in? And What types are they
     $name: String!
     $description: String!
     $price: Int!
@@ -31,12 +31,12 @@ const CREATE_PRODUCT_MUTATION = gql`
   }
 `;
 
-const CreateProduct = () => {
-  const { inputs, handleChange, resetForm, clearForm } = useForm({
+export default function CreateProduct() {
+  const { inputs, handleChange, clearForm, resetForm } = useForm({
     image: '',
-    name: 'Nice Shoes',
-    price: 34234,
-    description: 'These are the best shoes!',
+    name: '',
+    price: 0,
+    description: '',
   });
   const [createProduct, { loading, error, data }] = useMutation(
     CREATE_PRODUCT_MUTATION,
@@ -49,10 +49,10 @@ const CreateProduct = () => {
     <Form
       onSubmit={async (e) => {
         e.preventDefault();
-        // Submit the inputfields to the backend
+        // Submit the inputfields to the backend:
         const res = await createProduct();
         clearForm();
-        // go to that product's page!
+        // Go to that product's page!
         Router.push({
           pathname: `/product/${res.data.createProduct.id}`,
         });
@@ -87,7 +87,7 @@ const CreateProduct = () => {
             type="number"
             id="price"
             name="price"
-            placeholder="Price"
+            placeholder="price"
             value={inputs.price}
             onChange={handleChange}
           />
@@ -95,18 +95,18 @@ const CreateProduct = () => {
         <label htmlFor="description">
           Description
           <textarea
-            name="description"
             id="description"
+            name="description"
             placeholder="Description"
             value={inputs.description}
             onChange={handleChange}
           />
         </label>
-      </fieldset>
 
-      <button type="submit">+ Add Product</button>
+        <button type="submit">+ Add Product</button>
+      </fieldset>
     </Form>
   );
-};
+}
 
-export default CreateProduct;
+export { CREATE_PRODUCT_MUTATION };
