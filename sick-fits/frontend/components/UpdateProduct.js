@@ -62,7 +62,7 @@ export default function UpdateProduct({ id }) {
             price: inputs.price,
           },
         }).catch((err) => console.error(err));
-        console.log(res);
+        // console.log(res);
         // Submit the inputfields to the backend:
         // TODO: Handle submit!!!
         // const res = await createProduct();

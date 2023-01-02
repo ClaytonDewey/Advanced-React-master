@@ -33,10 +33,7 @@ const SignUp = () => {
   });
   async function handleSubmit(e) {
     e.preventDefault(); // stop the form from submitting
-    console.log(inputs);
-    const res = await signup().catch(console.error(error));
-    console.log(res);
-    console.log({ data, loading, error });
+    await signup().catch(console.error(error));
     resetForm();
     // Send the email and password to the graphqlAPI
   }

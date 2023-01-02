@@ -9,15 +9,12 @@ const GridStyles = styled.div`
   grid-gap: 2rem;
 `;
 
-const SignInPage = () => {
-  console.log('Something');
-  return (
-    <GridStyles>
-      <SignIn />
-      <SignUp />
-      <RequestReset />
-    </GridStyles>
-  );
-};
-
+const SignInPage = () => (
+  // console.log('Something');
+  <GridStyles>
+    <SignIn />
+    <SignUp />
+    <RequestReset />
+  </GridStyles>
+);
 export default SignInPage;
