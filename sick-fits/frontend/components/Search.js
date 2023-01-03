@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useLazyQuery } from '@apollo/client';
 import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
@@ -11,8 +10,8 @@ const SEARCH_PRODUCTS_QUERY = gql`
     searchTerms: allProducts(
       where: {
         OR: [
-          { name: { contains: $searchTerm } }
-          { description: { contains: $searchTerm } }
+          { name_contains_i: $searchTerm }
+          { description_contains_i: $searchTerm }
         ]
       }
     ) {
@@ -35,7 +34,7 @@ export default function Search() {
       fetchPolicy: 'no-cache',
     }
   );
-  console.log({data,loading,error})
+  console.log({ data, loading, error });
   const items = data?.searchTerms || [];
   const findItemsButChill = debounce(findItems, 350);
   resetIdCounter();
@@ -50,7 +49,6 @@ export default function Search() {
   } = useCombobox({
     items,
     onInputValueChange() {
-      console.log("Input changed!");
       findItemsButChill({
         variables: {
           searchTerm: inputValue,
@@ -59,20 +57,20 @@ export default function Search() {
     },
     onSelectedItemChange({ selectedItem }) {
       router.push({
-        pathname: `/product/${selectedItem.id}`
-      })
+        pathname: `/product/${selectedItem.id}`,
+      });
     },
-    itemToString: item => item?.name || ''
+    itemToString: (item) => item?.name || '',
   });
   return (
     <SearchStyles>
       <div {...getComboboxProps()}>
         <input
           {...getInputProps({
-            type: "search",
-            placeholder: "Search for an Item",
-            id: "search",
-            className: loading ? "loading" : "",
+            type: 'search',
+            placeholder: 'Search for an Item',
+            id: 'search',
+            className: loading ? 'loading' : null,
           })}
         />
       </div>
@@ -80,8 +78,8 @@ export default function Search() {
         {isOpen &&
           items.map((item, index) => (
             <DropDownItem
+              {...getItemProps({ item, index })}
               key={item.id}
-              {...getItemProps({ item })}
               highlighted={index === highlightedIndex}
             >
               <img
