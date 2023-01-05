@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
@@ -36,7 +37,10 @@ export default function Search() {
   );
   console.log({ data, loading, error });
   const items = data?.searchTerms || [];
-  const findItemsButChill = debounce(findItems, 350);
+  const findItemsButChill = React.useMemo(
+    () => debounce(findItems, 350),
+    [findItems]
+  );
   resetIdCounter();
   const {
     isOpen,
