@@ -35,7 +35,6 @@ export default function Search() {
       fetchPolicy: 'no-cache',
     }
   );
-  console.log({ data, loading, error });
   const items = data?.searchTerms || [];
   const findItemsButChill = React.useMemo(
     () => debounce(findItems, 350),
